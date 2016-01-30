@@ -3,11 +3,13 @@ class Creep extends GameObject
   int life;
   int progress;
   PVector temp;
+  //non-parameterised constructor
   Creep()
   {
     super(width * 0.5f, height  * 0.5f, 50);
   }
 
+//parameterised constructor
   Creep(float x, float y, float speed, int life, int radius)
   {
     pos.x = x;
@@ -22,13 +24,13 @@ class Creep extends GameObject
   {
     pushMatrix();
     translate(pos.x, pos.y);
+    
+    //calling the calT method to calculated the approriate angle to rotate to
     theta = calT(progress);
-    println(theta);
     rotate(theta);
     stroke(125);
     fill(255, 0, 0);
     ellipse(0, 0, radius, radius);
-    println(pos.x, pos.y);
     popMatrix();
   }
 
@@ -37,24 +39,34 @@ class Creep extends GameObject
     forward.x = sin(theta);
     forward.y = -cos(theta); 
     pos.add(PVector.mult(forward, speed));
-    line(pos.x, pos.y, map.get(1).pos.x, map.get(1).pos.y);
+    
+    //if the creep gets close to the point it is moving towards it's new destination is
+    //calculated as the next point and is pointed towards it
     if (pos.dist(map.get(progress).pos) < 5)
     {
-      if (progress <= map.size())
+      if (progress < map.size() - 1)
       {
         progress++;
       } else
       {
+        //if the crep reaches the end of the map it dies
         gameObjects.remove(this);
       }
     }
   }
 
+
+//Mapping method to determine what direction the creeps should be moving by calculating
+//the angle of the next point in the map
   float calT(int place)
   {
     float coords;
     coords = atan2(map.get(place).pos.y - pos.y, map.get(place).pos.x - pos.x);
+    
+    //need to add half_pi because of how atan2 calculates 0 - PI, it is off sync with standard 0 -PI
     coords += HALF_PI;
+    
+    //maps the results of atan2 to remove negative pi values
     if (coords < 0)
     {
       coords = map(coords, -PI, 0, PI, TWO_PI);
