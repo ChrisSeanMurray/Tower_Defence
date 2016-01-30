@@ -8,7 +8,9 @@ void setup()
 
 //arraylist to keep track of all game objects
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+//arraylist for keeping track of all map points
 ArrayList<MapPoint> map = new ArrayList<MapPoint>();
+
 int frame;
 int count;
 
@@ -16,19 +18,22 @@ void draw()
 {
   background(0);
   
-
   for (int i = gameObjects.size() - 1; i >= 0; i --)
   {
     GameObject go = gameObjects.get(i);
     go.update();
     go.render();
   }
+  
+  //this is in temporarily to help me debug
   for (int i = map.size() - 1; i >= 0; i --)
   {
     MapPoint m = map.get(i);
     m.update();
     m.render();
   }
+  
+  //temporary function to load multiple creeps
   if(frame>=30  && count < 50)
   {
       loadCreep();
@@ -51,6 +56,7 @@ void loadMap()
   }
 }
 
+//loads creeps
 void loadCreep()
 {
   float x;
