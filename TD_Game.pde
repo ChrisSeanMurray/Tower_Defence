@@ -4,8 +4,7 @@ void setup()
   loadMap();
   loadCreep();
   println(gameObjects.get(0).pos.x, gameObjects.get(0).pos.y);
-    println(map.get(0).pos.x, map.get(0).pos.y);
-
+  println(map.get(0).pos.x, map.get(0).pos.y);
 }
 
 //arraylist to keep track of all game objects
@@ -14,7 +13,7 @@ ArrayList<MapPoint> map = new ArrayList<MapPoint>();
 
 void draw()
 {
-    background(0);
+  background(0);
 
   for (int i = gameObjects.size() - 1; i >= 0; i --)
   {
@@ -47,8 +46,8 @@ void loadCreep()
 {
   float x;
   float y;
-  int life = 1;
-  float speed = 10;
+  int life = 20;
+  float speed = 1;
   int r = 20;
 
   x = map.get(0).pos.x;

@@ -20,37 +20,44 @@ class Creep extends GameObject
 
   void render()
   {
-    temp = pos.sub( map.get(1).pos);
     pushMatrix();
     translate(pos.x, pos.y);
-    theta = PVector.angleBetween(pos, map.get(1).pos);
+    theta = calT(progress);
     println(theta);
-    if (theta < 0)
-    {
-      theta = map(theta, -PI, 0, PI, TWO_PI);
-    }
-    pos.rotate(theta);
+    rotate(theta);
     stroke(125);
-    fill(125);
+    fill(255, 0, 0);
     ellipse(0, 0, radius, radius);
+    println(pos.x, pos.y);
     popMatrix();
   }
 
   void update()
   {
     forward.x = sin(theta);
-    forward.y = - cos(theta); 
+    forward.y = -cos(theta); 
     pos.add(PVector.mult(forward, speed));
     line(pos.x, pos.y, map.get(1).pos.x, map.get(1).pos.y);
+    if (pos.dist(map.get(progress).pos) < 5)
+    {
+      if (progress <= map.size())
+      {
+        progress++;
+      } else
+      {
+        gameObjects.remove(this);
+      }
+    }
   }
 
   float calT(int place)
   {
     float coords;
-    coords = atan2(map.get(place).pos.y - pos.y,map.get(place).pos.x - pos.x);
-    if (theta < 0)
+    coords = atan2(map.get(place).pos.y - pos.y, map.get(place).pos.x - pos.x);
+    coords += HALF_PI;
+    if (coords < 0)
     {
-      theta = map(coords, -PI, 0, PI, TWO_PI);
+      coords = map(coords, -PI, 0, PI, TWO_PI);
     }
 
 
