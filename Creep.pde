@@ -2,7 +2,7 @@ class Creep extends GameObject
 {
   int life;
   int progress;
-  PVector temp;
+  
   //non-parameterised constructor
   Creep()
   {
@@ -71,8 +71,6 @@ class Creep extends GameObject
     {
       coords = map(coords, -PI, 0, PI, TWO_PI);
     }
-
-
     return coords;
   }
 }
