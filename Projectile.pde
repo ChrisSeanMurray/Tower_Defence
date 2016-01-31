@@ -9,7 +9,7 @@ class Projectile extends GameObject
   {
     pos.x = x;
     pos.y = y;
-    speed = 5.0f;
+    speed = 20.0f;
     this.radius = radius;
     this.life = life;
     this.range = range;

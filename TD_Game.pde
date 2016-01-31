@@ -23,7 +23,10 @@ int score;
 void draw()
 {
   background(0);
-
+  fill(255,255,0);
+  textAlign(BOTTOM,CENTER);
+  text("Lives : "+ life, width/2,10);
+  text("Score : "+score, width/2,20);
   
 
   //this is in temporarily to help me debug
@@ -35,7 +38,7 @@ void draw()
   }
 
   //temporary function to load multiple creeps
-  if (frame>=60  && count < 50)
+  if (frame>=30  && count < 50)
   {
     loadCreep();
     frame = 0;
@@ -72,7 +75,7 @@ void loadCreep()
   float x;
   float y;
   int life = 1;
-  float speed = 2.0f;
+  float speed = 3.0f;
   int r = 10;
 
   x = map.get(0).pos.x;
