@@ -5,15 +5,20 @@ void setup()
   frame = 0;
   count = 0;
   loadTower();
+  life =  50;
+  score = 0;
 }
 
 //arraylist to keep track of all game objects
 ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 //arraylist for keeping track of all map points
 ArrayList<MapPoint> map = new ArrayList<MapPoint>();
+ArrayList<Creep> creeps = new ArrayList<Creep>();
 
 int frame;
 int count;
+int life;
+int score;
 
 void draw()
 {
@@ -22,6 +27,7 @@ void draw()
   for (int i = gameObjects.size() - 1; i >= 0; i --)
   {
     GameObject go = gameObjects.get(i);
+
     go.update();
     go.render();
   }
@@ -43,6 +49,7 @@ void draw()
   }
   frame++;
   trackCol();
+  println(score);
 }
 
 
@@ -64,7 +71,7 @@ void loadCreep()
   float x;
   float y;
   int life = 1;
-  float speed = 1;
+  float speed = 1.0f;
   int r = 10;
 
   x = map.get(0).pos.x;
@@ -72,6 +79,7 @@ void loadCreep()
 
   Creep creep = new Creep(x, y, speed, life, r);
   gameObjects.add(creep);
+  creeps.add(creep);
 }
 
 void loadTower()
@@ -102,9 +110,21 @@ void trackCol()
           {
             ((Creep)go).life --;
             ((Projectile)other).life--;
+            score += 10;
           }
         }
       }
+    }
+  }
+  
+  for(int i = creeps.size() - 1; i >= 0; i--)
+  {
+    
+    Creep cr = creeps.get(i);
+    if(cr.pos.dist(map.get(map.size() - 1).pos) < 5)
+    {
+      life--;
+      creeps.remove(cr);
     }
   }
 }
