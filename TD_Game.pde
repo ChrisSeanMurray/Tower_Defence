@@ -42,6 +42,7 @@ void draw()
     count++;
   }
   frame++;
+  trackCol();
 }
 
 
@@ -63,7 +64,7 @@ void loadCreep()
   float x;
   float y;
   int life = 1;
-  float speed = 5;
+  float speed = 1;
   int r = 10;
 
   x = map.get(0).pos.x;
@@ -80,6 +81,30 @@ void loadTower()
   int r = 10;
   float range = 150;
 
-  Tower tower = new Tower(x,y,r, range);
+  Tower tower = new Tower(x, y, r, range);
   gameObjects.add(tower);
+}
+
+void trackCol()
+{
+  for (int i = gameObjects.size() - 1; i >= 0; i --)
+  {
+    GameObject go = gameObjects.get(i);
+    if (go instanceof Creep)
+    {
+      for (int j = gameObjects.size() - 1; j >= 0; j --)
+      {
+        GameObject other = gameObjects.get(j);
+
+        if (other instanceof Projectile) // Check the type of a object
+        {
+          if (go.pos.dist(other.pos) < go.radius + other.radius)
+          {
+            ((Creep)go).life --;
+            ((Projectile)other).life--;
+          }
+        }
+      }
+    }
+  }
 }

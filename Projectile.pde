@@ -1,15 +1,19 @@
 class Projectile extends GameObject
 {
+  int life;
 
   Projectile()
   {
-    speed = 20.0f;
-    radius = 5;
+    speed = 50.0f;
+    radius = 2;
+    life = 1;
   }
 
   void render()
   {
     pushMatrix();
+    stroke(255);
+    noFill();
     translate(pos.x, pos.y);
     rotate(theta);
     ellipse(0, 0, radius, radius);
@@ -29,7 +33,9 @@ class Projectile extends GameObject
       // Im dead!
       gameObjects.remove(this);
     }
-
-    
+    if (life <= 0)
+    {
+      gameObjects.remove(this);
+    }
   }
 }
