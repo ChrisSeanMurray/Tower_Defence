@@ -5,16 +5,15 @@ class Projectile extends GameObject
   float range;
   PVector start;
 
-  Projectile(float x, float y, float theta, int life, int damage, int radius, float range)
+  Projectile(float x, float y, int life, int damage, int radius, float range)
   {
     pos.x = x;
     pos.y = y;
-    speed = 20.0f;
+    speed = 5.0f;
     this.radius = radius;
     this.life = life;
     this.range = range;
     start = new PVector(x, y);
-    this.theta = theta;
   }
 
   void render()
@@ -35,19 +34,15 @@ class Projectile extends GameObject
 
     forward.mult(speed);
     pos.add(forward);
-    
+
     float dist = PVector.dist(pos, start);
     if (dist > range/2)
     {
-      gameObjects.remove(this);     
+      gameObjects.remove(this);
     }
-
-    
     if (life <= 0)
     {
       gameObjects.remove(this);
     }
-    
-    
   }
 }

@@ -24,13 +24,7 @@ void draw()
 {
   background(0);
 
-  for (int i = gameObjects.size() - 1; i >= 0; i --)
-  {
-    GameObject go = gameObjects.get(i);
-
-    go.update();
-    go.render();
-  }
+  
 
   //this is in temporarily to help me debug
   for (int i = map.size() - 1; i >= 0; i --)
@@ -41,11 +35,18 @@ void draw()
   }
 
   //temporary function to load multiple creeps
-  if (frame>=30  && count < 50)
+  if (frame>=60  && count < 50)
   {
     loadCreep();
     frame = 0;
     count++;
+  }
+  for (int i = gameObjects.size() - 1; i >= 0; i --)
+  {
+    GameObject go = gameObjects.get(i);
+
+    go.update();
+    go.render();
   }
   frame++;
   trackCol();
@@ -71,7 +72,7 @@ void loadCreep()
   float x;
   float y;
   int life = 1;
-  float speed = 1.0f;
+  float speed = 2.0f;
   int r = 10;
 
   x = map.get(0).pos.x;
@@ -116,12 +117,12 @@ void trackCol()
       }
     }
   }
-  
-  for(int i = creeps.size() - 1; i >= 0; i--)
+
+  for (int i = creeps.size() - 1; i >= 0; i--)
   {
-    
+
     Creep cr = creeps.get(i);
-    if(cr.pos.dist(map.get(map.size() - 1).pos) < 5)
+    if (cr.pos.dist(map.get(map.size() - 1).pos) < 5)
     {
       life--;
       creeps.remove(cr);

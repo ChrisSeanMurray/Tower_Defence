@@ -20,7 +20,7 @@ abstract class GameObject
     this.radius = w * 0.5f;
     this.theta = 0.0f;
   }
-  
+
   abstract void update();
   abstract void render();
 }
