@@ -9,7 +9,7 @@ class Tower extends GameObject
     super(width * 0.5f, height  * 0.5f, 50);
   }
 
-  Tower(float x, float y, int radius, float range )
+  Tower(float x, float y, float radius, float range )
   {
     pos.x = x;
     pos.y = y;
@@ -28,8 +28,11 @@ class Tower extends GameObject
     line(- radius, radius, 0, - radius);
     line(0, - radius, radius, radius);
     line(radius, radius, 0, 0);
-    line(- radius, radius, 0, 0);    
+    line(- radius, radius, 0, 0);
+    if(mouseX > pos.x-radius && mouseX < pos.x+radius && mouseY> pos.y-radius && mouseY < pos.y+radius)
+    {
     ellipse(0, 0, range, range);
+    }
     popMatrix();
   }
 

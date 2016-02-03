@@ -4,9 +4,10 @@ void setup()
   loadMap();
   frame = 0;
   count = 0;
-  loadTower();
+  loadTower(100, 100, 10, 150);
   life =  50;
   score = 0;
+  play = true;
 }
 
 //arraylist to keep track of all game objects
@@ -14,46 +15,50 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 //arraylist for keeping track of all map points
 ArrayList<MapPoint> map = new ArrayList<MapPoint>();
 ArrayList<Creep> creeps = new ArrayList<Creep>();
+boolean[] keys = new boolean[526];
+
 
 int frame;
 int count;
 int life;
 int score;
+boolean play;
 
 void draw()
 {
   background(0);
-  fill(255,255,0);
-  textAlign(BOTTOM,CENTER);
-  text("Lives : "+ life, width/2,10);
-  text("Score : "+score, width/2,20);
-  
-
-  //this is in temporarily to help me debug
-  for (int i = map.size() - 1; i >= 0; i --)
+  if (play)
   {
-    MapPoint m = map.get(i);
-    m.update();
-    m.render();
-  }
+        loadPath();
 
-  //temporary function to load multiple creeps
-  if (frame>=30  && count < 50)
-  {
-    loadCreep();
-    frame = 0;
-    count++;
-  }
-  for (int i = gameObjects.size() - 1; i >= 0; i --)
-  {
-    GameObject go = gameObjects.get(i);
+    stroke(255);
+    float lineX = width-width/10;
+    line(lineX, 0, lineX, height);
+    loadTower(lineX + width/20, height/10, 10, 0);
+    fill(255, 255, 0);
+    textAlign(BOTTOM, CENTER);
+    text("Lives : "+ life, width/2, 10);
+    text("Score : "+score, width/2, 20);
 
-    go.update();
-    go.render();
+
+    //temporary function to load multiple creeps
+    if (frame>=30  && count < 50)
+    {
+      loadCreep();
+      frame = 0;
+      count++;
+    }
+    for (int i = gameObjects.size() - 1; i >= 0; i --)
+    {
+      GameObject go = gameObjects.get(i);
+
+      go.update();
+      go.render();
+    }
+    frame++;
+    trackCol();
+    println(score);
   }
-  frame++;
-  trackCol();
-  println(score);
 }
 
 
@@ -75,7 +80,7 @@ void loadCreep()
   float x;
   float y;
   int life = 1;
-  float speed = 3.0f;
+  float speed = 1.0f;
   int r = 10;
 
   x = map.get(0).pos.x;
@@ -86,17 +91,16 @@ void loadCreep()
   creeps.add(creep);
 }
 
-void loadTower()
+//Method for creating new instances of tower
+void loadTower(float x, float y, float r, float range)
 {
-  float x = 100;
-  float y = 100;
-  int r = 10;
-  float range = 150;
-
   Tower tower = new Tower(x, y, r, range);
   gameObjects.add(tower);
 }
 
+
+//This method is udes to detect collisions between creeps and projectiles,
+//also to determin if a creep makes it to the end
 void trackCol()
 {
   for (int i = gameObjects.size() - 1; i >= 0; i --)
@@ -130,5 +134,60 @@ void trackCol()
       life--;
       creeps.remove(cr);
     }
+  }
+}
+
+
+void keyPressed()
+{ 
+  keys[keyCode] = true;
+}
+
+void keyReleased()
+{
+  keys[keyCode] = false;
+}
+
+
+//This method is to create a visual representation of the path the creeps follow
+void loadPath()
+{
+  float theta1, theta2;
+  float x1, x2, x3, x4;
+  float y1, y2, y3, y4;
+
+  for (int i = 0; i< map.size()-1; i++)
+  {
+    //I need to calculate theta1 and theta2 in order to calculate the relevant point for plotting a quad
+    theta1 =atan2(map.get(i+1).pos.y - map.get(i).pos.y, map.get(i+1).pos.x - map.get(i).pos.x);
+    theta1 += HALF_PI;
+    if (theta1 < 0)
+    {
+      theta1 = map(theta1, -PI, 0, PI, TWO_PI);
+    }
+    
+    theta2 =atan2(map.get(i).pos.y - map.get(i+1).pos.y, map.get(i).pos.x - map.get(i+1).pos.x);
+    theta2 += HALF_PI;
+    if (theta2 < 0)
+    {
+      theta2 = map(theta2, -PI, 0, PI, TWO_PI);
+    }
+    
+    
+    
+    x1 = ((map.get(i).radius/2) * cos(theta1)) + map.get(i).pos.x;
+    x2 = ((map.get(i).radius/2) * cos(theta1-PI)) + map.get(i).pos.x;
+    y1 = ((map.get(i).radius/2) * sin(theta1)) + map.get(i).pos.y;
+    y2 = ((map.get(i).radius/2) * sin(theta1-PI)) + map.get(i).pos.y;
+
+    x3 = ((map.get(i+1).radius/2) * cos(theta2)) + map.get(i+1).pos.x;
+    x4 = ((map.get(i+1).radius/2) * cos(theta2-PI)) + map.get(i+1).pos.x;
+    y3 = ((map.get(i+1).radius/2) * sin(theta2)) + map.get(i+1).pos.y;
+    y4 = ((map.get(i+1).radius/2) * sin(theta2-PI)) + map.get(i+1).pos.y;
+
+    fill(255);
+    stroke(255);
+    quad(x1,y1,x2,y2,x3,y3,x4,y4);
+    map.get(i).render();
   }
 }

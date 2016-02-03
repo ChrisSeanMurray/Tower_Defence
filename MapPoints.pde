@@ -23,7 +23,7 @@ class MapPoint extends GameObject
   {
     pushMatrix();
     translate(pos.x, pos.y);
-    noFill();
+    fill(255);
     stroke(255);
     ellipse(0, 0, radius, radius);
     popMatrix();
