@@ -59,7 +59,6 @@ void draw()
     }
     frame++;
     trackCol();
-    println(score);
   }
 }
 
@@ -160,22 +159,18 @@ void loadPath()
 
   for (int i = 0; i< map.size()-1; i++)
   {
-    //I need to calculate theta1 and theta2 in order to calculate the relevant point for plotting a quad
+    //I need to calculate theta1 and theta2 in order to calculate the relevant points for plotting a quad
+    
+    //theta1 will be the angle between point i and the next point in the list
     theta1 =atan2(map.get(i+1).pos.y - map.get(i).pos.y, map.get(i+1).pos.x - map.get(i).pos.x);
     theta1 += HALF_PI;
     if (theta1 < 0)
     {
       theta1 = map(theta1, -PI, 0, PI, TWO_PI);
     }
-
-    theta2 =atan2(map.get(i).pos.y - map.get(i+1).pos.y, map.get(i).pos.x - map.get(i+1).pos.x);
-    theta2 += HALF_PI;
-    if (theta2 < 0)
-    {
-      theta2 = map(theta2, -PI, 0, PI, TWO_PI);
-    }
-
-
+    //theta2 will be the oppisite angle to theta1 so 
+    theta2 = theta1-PI;
+    
 
     x1 = ((map.get(i).radius/2) * cos(theta1)) + map.get(i).pos.x;
     x2 = ((map.get(i).radius/2) * cos(theta1-PI)) + map.get(i).pos.x;
