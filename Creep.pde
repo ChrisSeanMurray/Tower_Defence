@@ -42,7 +42,7 @@ class Creep extends GameObject
 
     //if the creep gets close to the point it is moving towards it's new destination is
     //calculated as the next point and is pointed towards it
-    if (pos.dist(map.get(progress).pos) < 5)
+    if (pos.dist(map.get(progress).pos) < 2)
     {
       if (progress < map.size() - 1)
       {
