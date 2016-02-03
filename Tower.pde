@@ -71,7 +71,7 @@ class Tower extends GameObject
       forward.x = sin(theta);
       forward.y = -cos(theta);
 
-      if (ellapsed > 40)
+      if (ellapsed > 30)
       {
         Projectile pro = new Projectile(pos.x, pos.y, 1, 2, 5, range,c);
 

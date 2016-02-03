@@ -5,6 +5,7 @@ void setup()
   frame = 0;
   count = 0;
   loadTower(100, 100, 10, 150);
+  loadTower(width - width/20, height/10,10,0);
   life =  50;
   score = 0;
   play = true;
