@@ -153,6 +153,7 @@ void keyReleased()
 //This method is to create a visual representation of the path the creeps follow
 void loadPath()
 {
+  color c3 = color(255);
   float theta1, theta2;
   float x1, x2, x3, x4;
   float y1, y2, y3, y4;
@@ -182,20 +183,24 @@ void loadPath()
     y3 = ((map.get(i+1).radius/2) * sin(theta2)) + map.get(i+1).pos.y;
     y4 = ((map.get(i+1).radius/2) * sin(theta2-PI)) + map.get(i+1).pos.y;
 
-    fill(255);
-    stroke(255);
+    fill(c3);
+    stroke(c3);
     quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    
+    //checking to see if this is the first point, if it is set the color to green to visually show it's the first point
     if (i == 0)
     {
       color c1 = color(0, 255, 0);
       map.get(i).c = c1;
-    } else
+    } else //if it's not the first point set the color to be the same color as the path
     {
-      color c1 = color(255, 255, 255);
+      color c1 = c3;
       map.get(i).c = c1;
     }
     map.get(i).render();
   }
+  
+  //setting the color for the end point and also calling the render for the last point
   color c2 = color(255, 0, 0);
   map.get(map.size()-1).c = c2;
   map.get(map.size()-1).render();
