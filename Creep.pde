@@ -18,6 +18,7 @@ class Creep extends GameObject
     this.radius = radius;
     this.life = life;
     progress = 0;
+    c = #FC0303;
   }
 
   void render()
@@ -28,8 +29,8 @@ class Creep extends GameObject
     //calling the calT method to calculated the approriate angle to rotate to
     theta = calT(progress);
     rotate(theta);
-    stroke(125);
-    fill(255, 0, 0);
+    stroke(c);
+    fill(c);
     ellipse(0, 0, radius, radius);
     popMatrix();
   }

@@ -5,7 +5,7 @@ class Projectile extends GameObject
   float range;
   PVector start;
 
-  Projectile(float x, float y, int life, int damage, int radius, float range)
+  Projectile(float x, float y, int life, int damage, int radius, float range, color c)
   {
     pos.x = x;
     pos.y = y;
@@ -14,13 +14,14 @@ class Projectile extends GameObject
     this.life = life;
     this.range = range;
     start = new PVector(x, y);
+    this.c = c;
   }
 
   void render()
   {
     pushMatrix();
-    stroke(255);
-    noFill();
+    stroke(c);
+    fill(c);
     translate(pos.x, pos.y);
     rotate(theta);
     ellipse(0, 0, radius, radius);

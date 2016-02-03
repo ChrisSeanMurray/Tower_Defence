@@ -16,6 +16,7 @@ class Tower extends GameObject
     this.radius = radius;
     this.range = range;
     ellapsed = 30;
+    c = #A403FC;
   }
 
   void render()
@@ -24,7 +25,7 @@ class Tower extends GameObject
     translate(pos.x, pos.y);
     rotate(theta);
     noFill();
-    stroke(0, 255, 0);
+    stroke(c);
     line(- radius, radius, 0, - radius);
     line(0, - radius, radius, radius);
     line(radius, radius, 0, 0);
@@ -72,7 +73,7 @@ class Tower extends GameObject
 
       if (ellapsed > 40)
       {
-        Projectile pro = new Projectile(pos.x, pos.y, 1, 2, 5, range);
+        Projectile pro = new Projectile(pos.x, pos.y, 1, 2, 5, range,c);
 
         pro.pos.add(PVector.mult(forward, 15.0f));
         pro.forward = forward;

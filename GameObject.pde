@@ -6,6 +6,7 @@ abstract class GameObject
   float w;
   float radius;
   float speed;
+  color c;
 
   GameObject()
   {

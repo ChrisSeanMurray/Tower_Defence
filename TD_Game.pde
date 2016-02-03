@@ -27,15 +27,17 @@ boolean play;
 void draw()
 {
   background(0);
-  if (play)
+  if (!play)
   {
-        loadPath();
+    displayMenu();
+  } else if (play)
+  {
+    loadPath();
 
     stroke(255);
     float lineX = width-width/10;
     line(lineX, 0, lineX, height);
-    loadTower(lineX + width/20, height/10, 10, 0);
-    fill(255, 255, 0);
+    fill(255, 0, 255);
     textAlign(BOTTOM, CENTER);
     text("Lives : "+ life, width/2, 10);
     text("Score : "+score, width/2, 20);
@@ -165,16 +167,16 @@ void loadPath()
     {
       theta1 = map(theta1, -PI, 0, PI, TWO_PI);
     }
-    
+
     theta2 =atan2(map.get(i).pos.y - map.get(i+1).pos.y, map.get(i).pos.x - map.get(i+1).pos.x);
     theta2 += HALF_PI;
     if (theta2 < 0)
     {
       theta2 = map(theta2, -PI, 0, PI, TWO_PI);
     }
-    
-    
-    
+
+
+
     x1 = ((map.get(i).radius/2) * cos(theta1)) + map.get(i).pos.x;
     x2 = ((map.get(i).radius/2) * cos(theta1-PI)) + map.get(i).pos.x;
     y1 = ((map.get(i).radius/2) * sin(theta1)) + map.get(i).pos.y;
@@ -187,7 +189,23 @@ void loadPath()
 
     fill(255);
     stroke(255);
-    quad(x1,y1,x2,y2,x3,y3,x4,y4);
+    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    if (i == 0)
+    {
+      color c1 = color(0, 255, 0);
+      map.get(i).c = c1;
+    } else
+    {
+      color c1 = color(255, 255, 255);
+      map.get(i).c = c1;
+    }
     map.get(i).render();
   }
+  color c2 = color(255, 0, 0);
+  map.get(map.size()-1).c = c2;
+  map.get(map.size()-1).render();
+}
+
+void displayMenu()
+{
 }
