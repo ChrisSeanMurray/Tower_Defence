@@ -23,14 +23,20 @@ int count;
 int life;
 int score;
 boolean play;
+color mouse;
 
 void draw()
 {
-  background(0);
-  if (!play)
+  color back = color(0);
+  background(back);
+
+  if(mouse == back)
   {
-    displayMenu();
-  } else if (play)
+  }
+  else
+  {
+  }
+  if (play)
   {
     loadPath();
 
@@ -161,7 +167,7 @@ void loadPath()
   for (int i = 0; i< map.size()-1; i++)
   {
     //I need to calculate theta1 and theta2 in order to calculate the relevant points for plotting a quad
-    
+
     //theta1 will be the angle between point i and the next point in the list
     theta1 =atan2(map.get(i+1).pos.y - map.get(i).pos.y, map.get(i+1).pos.x - map.get(i).pos.x);
     theta1 += HALF_PI;
@@ -171,7 +177,7 @@ void loadPath()
     }
     //theta2 will be the oppisite angle to theta1 so 
     theta2 = theta1-PI;
-    
+
 
     x1 = ((map.get(i).radius/2) * cos(theta1)) + map.get(i).pos.x;
     x2 = ((map.get(i).radius/2) * cos(theta1-PI)) + map.get(i).pos.x;
@@ -186,7 +192,7 @@ void loadPath()
     fill(c3);
     stroke(c3);
     quad(x1, y1, x2, y2, x3, y3, x4, y4);
-    
+
     //checking to see if this is the first point, if it is set the color to green to visually show it's the first point
     if (i == 0)
     {
@@ -199,13 +205,14 @@ void loadPath()
     }
     map.get(i).render();
   }
-  
+
   //setting the color for the end point and also calling the render for the last point
   color c2 = color(255, 0, 0);
   map.get(map.size()-1).c = c2;
   map.get(map.size()-1).render();
 }
 
-void displayMenu()
+void mouseMoved()
 {
+  mouse = get(mouseX, mouseY);
 }
