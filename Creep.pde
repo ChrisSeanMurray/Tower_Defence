@@ -57,6 +57,7 @@ class Creep extends GameObject
     if (life <= 0)
     {
       gameObjects.remove(this);
+      creeps.remove(this);
     }
   }
 

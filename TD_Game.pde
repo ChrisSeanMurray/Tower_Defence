@@ -104,6 +104,7 @@ void draw()
       line(mouseX, mouseY- 10, mouseX + 10, mouseY + 10);
       line(mouseX +10, mouseY +10, mouseX, mouseY);
       line(mouseX- 10, mouseY +10, mouseX, mouseY);
+      ellipse(mouseX,mouseY,150,150);
     }
     if (!pause && keys['P'])
     {
@@ -118,16 +119,22 @@ void draw()
         pause = false;
       }
     }
-    if (count >= waves.get(waveCount).spawnNo - 1 && creepCount == 0 && waveCount < waves.size()-1)
+    
+    //the following statement handles whether to advance onto the next wave or not
+    if (count >= waves.get(waveCount).spawnNo - 1 && creepCount == 0 && waveCount < waves.size()-1 && life > 0)
     {
       waveCount++;
       waveTimer = 330;
       count = 0;
     }
   }
+  if(waveCount >= waves.size() && creepCount ==0 && life >0)
+  {
+    textSize(70);
+    text("You Win, Congrats",width/2,height/2);
+  }
 
   waveTimer--;
-  println(waveCount + 1);
 }
 
 
@@ -141,23 +148,6 @@ void loadMap()
     MapPoint point = new MapPoint(lines[i]);
     map.add(point);
   }
-}
-
-//loads creeps
-void loadCreep()
-{
-  float x;
-  float y;
-  int life = 1;
-  float speed = 1.0f;
-  int r = 10;
-
-  x = map.get(0).pos.x;
-  y = map.get(0).pos.y;
-
-  Creep creep = new Creep(x, y, speed, life, r);
-  gameObjects.add(creep);
-  creeps.add(creep);
 }
 
 //Method for creating new instances of tower
@@ -198,7 +188,6 @@ void trackCol()
 
   for (int i = creeps.size() - 1; i >= 0; i--)
   {
-
     Creep cr = creeps.get(i);
     if (cr.pos.dist(map.get(map.size() - 1).pos) < 5)
     {
@@ -296,6 +285,8 @@ void mouseClicked()
   }
 }
 
+
+//Loads data from a txt file, creates new instances of the wave class which handles creep generation based on the information from the txt file
 void loadWave()
 {
   String[] lines = loadStrings("wave.txt");
