@@ -4,11 +4,14 @@ void setup()
   loadMap();
   frame = 0;
   count = 0;
-  loadTower(100, 100, 10, 150);
-  loadTower(width - width/20, height/10,10,0);
+  creator = new Tower(width - width/20, height/10, 10, 0);
+  gameObjects.add(creator);
   life =  50;
   score = 0;
+  money = 300;
   play = true;
+  createTower = false;
+  towerCreateDelay = 0;
 }
 
 //arraylist to keep track of all game objects
@@ -18,23 +21,24 @@ ArrayList<MapPoint> map = new ArrayList<MapPoint>();
 ArrayList<Creep> creeps = new ArrayList<Creep>();
 boolean[] keys = new boolean[526];
 
-
+Tower creator;
 int frame;
 int count;
-int life;
-int score;
+int score,life,money;
 boolean play;
 color mouse;
+boolean createTower;
+int towerCreateDelay;
 
 void draw()
 {
+  towerCreateDelay++;
   color back = color(0);
   background(back);
 
-  if(mouse == back)
+  if (mouse == back)
   {
-  }
-  else
+  } else
   {
   }
   if (play)
@@ -66,6 +70,15 @@ void draw()
     }
     frame++;
     trackCol();
+    if (createTower)
+    {
+      noFill();
+      stroke(#A403FC);
+      line(mouseX- 10, mouseY +10, mouseX,mouseY - 10);
+      line(mouseX, mouseY- 10,mouseX + 10,mouseY + 10);
+      line(mouseX +10, mouseY +10, mouseX, mouseY);
+      line(mouseX- 10, mouseY +10, mouseX, mouseY);
+    }
   }
 }
 
@@ -102,8 +115,9 @@ void loadCreep()
 //Method for creating new instances of tower
 void loadTower(float x, float y, float r, float range)
 {
-  Tower tower = new Tower(x, y, r, range);
+  GameObject tower = new Tower(x, y, r, range);
   gameObjects.add(tower);
+  money -= 200;
 }
 
 
@@ -216,4 +230,19 @@ void loadPath()
 void mouseMoved()
 {
   mouse = get(mouseX, mouseY);
+}
+
+void mouseClicked()
+{
+  if (mouseX >= creator.pos.x-creator.radius/2 && mouseX <= creator.pos.x+creator.radius/2
+    && mouseY >= creator.pos.y-creator.radius/2 && mouseY<= creator.pos.y+creator.radius/2)
+  {
+    createTower = true;
+    towerCreateDelay = 0;
+  }
+  if (createTower && towerCreateDelay > 20)
+  {
+    loadTower(mouseX, mouseY, 10, 150);
+    createTower = false;
+  }
 }
