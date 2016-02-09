@@ -13,6 +13,7 @@ void setup()
   createTower = false;
   towerCreateDelay = 0;
   waveTimer = 330;
+  pause = false;
 }
 
 //arraylist to keep track of all game objects
@@ -26,7 +27,7 @@ Tower creator;
 int frame;
 int count;
 int score, life, money;
-boolean play;
+boolean play, pause;
 color mouse;
 boolean createTower;
 int towerCreateDelay;
@@ -37,11 +38,12 @@ void draw()
 {
   //towerCreateDelay is something I added to stop the tower from immediateley being placed onto the creator tower unintentionally
   towerCreateDelay++;
-  
+
   background(0);
 
   if (play)
   {
+
     loadPath();
 
     stroke(255);
@@ -55,7 +57,7 @@ void draw()
     text("Money : €"+money, width/2, 30);
     textAlign(CENTER);
     text("Costs €150 ", creator.pos.x, creator.pos.y-creator.radius);
-    
+
     if (waveTimer > 0)
     {
       fill(0, 0, 255);
@@ -65,7 +67,7 @@ void draw()
 
 
     //temporary function to load multiple creeps
-    if (frame>=30  && count < 50 && waveTimer <=0)
+    if (frame>=30  && count < 50 && waveTimer <=0 && !pause)
     {
       loadCreep();
       frame = 0;
@@ -74,13 +76,15 @@ void draw()
     for (int i = gameObjects.size() - 1; i >= 0; i --)
     {
       GameObject go = gameObjects.get(i);
-      go.update();
-
+      if (!pause)
+      {
+        go.update();
+      }
       go.render();
     }
     frame++;
     trackCol();
-    
+
     //draws a represantative of a tower so the player can tell where it is they will be placing the tower
     if (createTower)
     {
@@ -90,6 +94,19 @@ void draw()
       line(mouseX, mouseY- 10, mouseX + 10, mouseY + 10);
       line(mouseX +10, mouseY +10, mouseX, mouseY);
       line(mouseX- 10, mouseY +10, mouseX, mouseY);
+    }
+    if (!pause && keys['P'])
+    {
+      pause = true;
+    }
+    if (pause)
+    {
+      textSize(50);
+      text("PRESS SPACE BAR TO RESUME", width/2, height/2);
+      if (keys[' '])
+      {
+        pause = false;
+      }
     }
   }
   waveTimer--;
