@@ -141,6 +141,7 @@ void trackCol()
             ((Creep)go).life --;
             ((Projectile)other).life--;
             score += 10;
+            money += 3;
           }
         }
       }
@@ -240,7 +241,7 @@ void mouseClicked()
     createTower = true;
     towerCreateDelay = 0;
   }
-  if (createTower && towerCreateDelay > 20)
+  if (createTower && towerCreateDelay > 20 && money >= 200)
   {
     loadTower(mouseX, mouseY, 10, 150);
     createTower = false;
