@@ -269,8 +269,8 @@ void mouseClicked()
 {
   //this if statement determines if the mouse is contained within the tower creator
   //when clicked, if it is it toggles the tower create mode so the player can now place a tower on the map
-  if (mouseX >= creator.pos.x-creator.radius/2 && mouseX <= creator.pos.x+creator.radius/2
-    && mouseY >= creator.pos.y-creator.radius/2 && mouseY<= creator.pos.y+creator.radius/2
+  if (mouseX >= creator.pos.x-creator.radius && mouseX <= creator.pos.x+creator.radius
+    && mouseY >= creator.pos.y-creator.radius && mouseY<= creator.pos.y+creator.radius
     && money >= 150)
   {
     createTower = true;

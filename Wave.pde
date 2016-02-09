@@ -13,9 +13,11 @@ class Wave
     speed = Float.parseFloat(parts[2]);
   }
 
+//method to load creeps, it's inside the wave class as the control fields get loaded into instances of the wave class
+//from a txt file
   void loadCreep()
   {
-    int r = 10;
+    int r = 15;
 
     float x = map.get(0).pos.x;
     float y = map.get(0).pos.y;
