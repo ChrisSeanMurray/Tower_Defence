@@ -12,6 +12,8 @@ void setup()
   play = true;
   createTower = false;
   towerCreateDelay = 0;
+  waveTimer = 330;
+  pause = false;
 }
 
 //arraylist to keep track of all game objects
@@ -24,23 +26,20 @@ boolean[] keys = new boolean[526];
 Tower creator;
 int frame;
 int count;
-int score,life,money;
+int score, life, money;
 boolean play;
 color mouse;
 boolean createTower;
 int towerCreateDelay;
+int waveTimer;
+
 
 void draw()
 {
   towerCreateDelay++;
-  color back = color(0);
-  background(back);
+  background(0);
 
-  if (mouse == back)
-  {
-  } else
-  {
-  }
+
   if (play)
   {
     loadPath();
@@ -49,13 +48,23 @@ void draw()
     float lineX = width-width/10;
     line(lineX, 0, lineX, height);
     fill(255, 0, 255);
+    textSize(10);
     textAlign(BOTTOM, CENTER);
     text("Lives : "+ life, width/2, 10);
     text("Score : "+score, width/2, 20);
+    text("Money : €"+money, width/2, 30);
+    textAlign(CENTER);
+    text("Costs €150 ", creator.pos.x, creator.pos.y-creator.radius);
+    if (waveTimer > 0)
+    {
+      fill(0, 0, 255);
+      textSize(50);
+      text("WAVE INCOMING IN " + waveTimer/60, width/2, height/2);
+    }
 
 
     //temporary function to load multiple creeps
-    if (frame>=30  && count < 50)
+    if (frame>=30  && count < 50 && waveTimer <=0)
     {
       loadCreep();
       frame = 0;
@@ -64,8 +73,8 @@ void draw()
     for (int i = gameObjects.size() - 1; i >= 0; i --)
     {
       GameObject go = gameObjects.get(i);
-
       go.update();
+
       go.render();
     }
     frame++;
@@ -74,12 +83,13 @@ void draw()
     {
       noFill();
       stroke(#A403FC);
-      line(mouseX- 10, mouseY +10, mouseX,mouseY - 10);
-      line(mouseX, mouseY- 10,mouseX + 10,mouseY + 10);
+      line(mouseX- 10, mouseY +10, mouseX, mouseY - 10);
+      line(mouseX, mouseY- 10, mouseX + 10, mouseY + 10);
       line(mouseX +10, mouseY +10, mouseX, mouseY);
       line(mouseX- 10, mouseY +10, mouseX, mouseY);
     }
   }
+  waveTimer--;
 }
 
 
@@ -117,7 +127,7 @@ void loadTower(float x, float y, float r, float range)
 {
   GameObject tower = new Tower(x, y, r, range);
   gameObjects.add(tower);
-  money -= 200;
+  money -= 150;
 }
 
 
@@ -228,20 +238,21 @@ void loadPath()
   map.get(map.size()-1).render();
 }
 
-void mouseMoved()
-{
-  mouse = get(mouseX, mouseY);
-}
 
 void mouseClicked()
 {
+  //this if statement determines if the mouse is contained within the tower creator
+  //when clicked, if it is it toggles the tower create mode so the player can now place a tower on the map
   if (mouseX >= creator.pos.x-creator.radius/2 && mouseX <= creator.pos.x+creator.radius/2
-    && mouseY >= creator.pos.y-creator.radius/2 && mouseY<= creator.pos.y+creator.radius/2)
+    && mouseY >= creator.pos.y-creator.radius/2 && mouseY<= creator.pos.y+creator.radius/2
+    && money >= 150)
   {
     createTower = true;
     towerCreateDelay = 0;
   }
-  if (createTower && towerCreateDelay > 20 && money >= 200)
+  //if tower create mode is toggled true then the player can place a tower on the map
+  //when mouse is clicked and will place the tower at the mouses current coordinates
+  if (createTower && towerCreateDelay > 20)
   {
     loadTower(mouseX, mouseY, 10, 150);
     createTower = false;
