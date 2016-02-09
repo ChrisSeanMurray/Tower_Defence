@@ -13,7 +13,6 @@ void setup()
   createTower = false;
   towerCreateDelay = 0;
   waveTimer = 330;
-  pause = false;
 }
 
 //arraylist to keep track of all game objects
@@ -36,9 +35,10 @@ int waveTimer;
 
 void draw()
 {
+  //towerCreateDelay is something I added to stop the tower from immediateley being placed onto the creator tower unintentionally
   towerCreateDelay++;
+  
   background(0);
-
 
   if (play)
   {
@@ -55,6 +55,7 @@ void draw()
     text("Money : €"+money, width/2, 30);
     textAlign(CENTER);
     text("Costs €150 ", creator.pos.x, creator.pos.y-creator.radius);
+    
     if (waveTimer > 0)
     {
       fill(0, 0, 255);
@@ -79,6 +80,8 @@ void draw()
     }
     frame++;
     trackCol();
+    
+    //draws a represantative of a tower so the player can tell where it is they will be placing the tower
     if (createTower)
     {
       noFill();
