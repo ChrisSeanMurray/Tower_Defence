@@ -2,6 +2,7 @@ void setup()
 {
   size(800, 500);
   loadMap();
+  loadWave();
   frame = 0;
   count = 0;
   creator = new Tower(width - width/20, height/10, 10, 0);
@@ -14,6 +15,8 @@ void setup()
   towerCreateDelay = 0;
   waveTimer = 330;
   pause = false;
+  waveCount = 0;
+  timeBetween = 0;
 }
 
 //arraylist to keep track of all game objects
@@ -21,6 +24,7 @@ ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 //arraylist for keeping track of all map points
 ArrayList<MapPoint> map = new ArrayList<MapPoint>();
 ArrayList<Creep> creeps = new ArrayList<Creep>();
+ArrayList<Wave> waves = new ArrayList<Wave>();
 boolean[] keys = new boolean[526];
 
 Tower creator;
@@ -31,13 +35,15 @@ boolean play, pause;
 color mouse;
 boolean createTower;
 int towerCreateDelay;
-int waveTimer;
+int waveTimer, waveCount;
+int timeBetween;
 
 
 void draw()
 {
   //towerCreateDelay is something I added to stop the tower from immediateley being placed onto the creator tower unintentionally
   towerCreateDelay++;
+  int creepCount = 0;
 
   background(0);
 
@@ -67,9 +73,9 @@ void draw()
 
 
     //temporary function to load multiple creeps
-    if (frame>=30  && count < 50 && waveTimer <=0 && !pause)
+    if (frame>=30  && count < waves.get(waveCount).spawnNo && waveTimer <=0 && !pause)
     {
-      loadCreep();
+      waves.get(waveCount).loadCreep();
       frame = 0;
       count++;
     }
@@ -81,6 +87,10 @@ void draw()
         go.update();
       }
       go.render();
+      if (go instanceof Creep)
+      {
+        creepCount++;
+      }
     }
     frame++;
     trackCol();
@@ -108,8 +118,16 @@ void draw()
         pause = false;
       }
     }
+    if (count >= waves.get(waveCount).spawnNo - 1 && creepCount == 0 && waveCount < waves.size()-1)
+    {
+      waveCount++;
+      waveTimer = 330;
+      count = 0;
+    }
   }
+
   waveTimer--;
+  println(waveCount + 1);
 }
 
 
@@ -168,7 +186,7 @@ void trackCol()
         {
           if (go.pos.dist(other.pos) < go.radius + other.radius)
           {
-            ((Creep)go).life --;
+            ((Creep)go).life--;
             ((Projectile)other).life--;
             score += 10;
             money += 3;
@@ -189,7 +207,6 @@ void trackCol()
     }
   }
 }
-
 
 void keyPressed()
 { 
@@ -276,5 +293,16 @@ void mouseClicked()
   {
     loadTower(mouseX, mouseY, 10, 150);
     createTower = false;
+  }
+}
+
+void loadWave()
+{
+  String[] lines = loadStrings("wave.txt");
+
+  for (int i = 0; i <lines.length; i++)
+  {
+    Wave wave = new Wave(lines[i]);
+    waves.add(wave);
   }
 }

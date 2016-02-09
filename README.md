@@ -8,12 +8,13 @@ Implemented :
 - Dynamic path drawing based on the map points loaded into the game  
 - Score, Life and money counters  
 - Projectile collisions  
-- Score decrementation when a Creep reaches the end MapPoint
+- Score decrementation when a Creep reaches the end MapPoint  
+- Multiple waves of Creeps from a .txt file  
+
 
 
 Still to add :  
 - Map creation mode, the ability to create a new map from within the game  
-- Multiple waves of Creeps from a .txt file  
 - Multiple types of Creeps  
 - Multiple types of Towers  
 - Tower upgrades  
