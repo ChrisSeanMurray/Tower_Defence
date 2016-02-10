@@ -3,6 +3,7 @@ class Wave
   float speed;
   int spawnNo;
   int lives;
+  int waveFrequency;
 
   Wave(String line)
   {
@@ -11,6 +12,8 @@ class Wave
     spawnNo = Integer.parseInt(parts[0]);
     lives = Integer.parseInt(parts[1]);
     speed = Float.parseFloat(parts[2]);
+    waveFrequency= Integer.parseInt(parts[3]);
+
   }
 
 //method to load creeps, it's inside the wave class as the control fields get loaded into instances of the wave class

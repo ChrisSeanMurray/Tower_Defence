@@ -87,7 +87,7 @@ void draw()
 
 
     //temporary function to load multiple creeps
-    if (frame>=30  && count < waves.get(waveCount).spawnNo && waveTimer <=0 && !pause)
+    if (frame>=waves.get(waveCount).waveFrequency  && count < waves.get(waveCount).spawnNo && waveTimer <=0 && !pause)
     {
       waves.get(waveCount).loadCreep();
       frame = 0;
@@ -160,10 +160,11 @@ void draw()
       for (int i = gameObjects.size() - 1; i >= 0; i --)
       {
         GameObject go = gameObjects.get(i);
-        if (go instanceof Tower)
+        if (go instanceof Tower || go instanceof Creep)
         {
           gameObjects.remove(go);
         }
+
       }
       creator = new Tower(width - width/20, height/10, 10, 0);
       gameObjects.add(creator);
