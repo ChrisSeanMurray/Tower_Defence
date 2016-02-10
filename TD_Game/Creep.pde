@@ -18,7 +18,7 @@ class Creep extends GameObject
     this.radius = radius;
     this.life = life;
     progress = 0;
-    c = #FC0303;
+   
   }
 
   void render()
@@ -37,6 +37,25 @@ class Creep extends GameObject
 
   void update()
   {
+    //adjusts the color of the crep depending on how much health it has
+    if(life ==1)
+    {
+    c = #FC0303;
+    }
+    else if(life ==2)
+    {
+      c = #08BFBD;
+    }
+    else if(life == 3)
+    {
+      c = #F5850C;
+    }
+    else
+    {
+      c = #86EA05;
+    }
+    
+    
     forward.x = sin(theta);
     forward.y = -cos(theta); 
     pos.add(PVector.mult(forward, speed));
