@@ -76,10 +76,10 @@ class Creep extends GameObject
       c = #FC0303;
     } else if (life ==2)
     {
-      c = #08BFBD;
+      c = #1A58D8;
     } else if (life == 3)
     {
-      c = #F5850C;
+      c = #E88C02;
     } else
     {
       c = #86EA05;

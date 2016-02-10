@@ -228,7 +228,7 @@ void trackCol()
     Creep cr = creeps.get(i);
     if (cr.pos.dist(map.get(map.size() - 1).pos) < 5)
     {
-      life--;
+      life-=cr.life;
       creeps.remove(cr);
     }
   }
