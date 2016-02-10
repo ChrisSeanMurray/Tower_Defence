@@ -1,5 +1,19 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
+AudioPlayer popSound;
+Minim minim;
+
 void setup()
 {
+  minim = new Minim(this);  
+  
+  popSound = minim.loadFile("bop.wav");
+  
   size(800, 500);
   loadMap();
   loadWave();
@@ -128,7 +142,7 @@ void draw()
       count = 0;
     }
   }
-  if(waveCount >= waves.size() && creepCount ==0 && life >0)
+  if(waveCount >= waves.size()-1 && creepCount <= 0 && life > 0)
   {
     textSize(70);
     text("You Win, Congrats",width/2,height/2);

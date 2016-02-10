@@ -56,6 +56,11 @@ class Creep extends GameObject
     }
     if (life <= 0)
     {
+      if (popSound != null)
+      {
+        popSound.rewind();
+        popSound.play();
+      }
       gameObjects.remove(this);
       creeps.remove(this);
     }
