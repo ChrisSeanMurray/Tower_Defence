@@ -11,9 +11,9 @@ Minim minim;
 void setup()
 {
   minim = new Minim(this);  
-  
+
   popSound = minim.loadFile("bop.wav");
-  
+
   size(800, 500);
   loadMap();
   loadWave();
@@ -114,8 +114,8 @@ void draw()
     {
       noFill();
       stroke(#A403FC);
-      ellipse(mouseX,mouseY,20,20);
-      ellipse(mouseX,mouseY,150,150);
+      ellipse(mouseX, mouseY, 20, 20);
+      ellipse(mouseX, mouseY, 150, 150);
     }
     if (!pause && keys['P'])
     {
@@ -130,7 +130,7 @@ void draw()
         pause = false;
       }
     }
-    
+
     //the following statement handles whether to advance onto the next wave or not
     if (count >= waves.get(waveCount).spawnNo - 1 && creepCount == 0 && waveCount < waves.size()-1 && life > 0)
     {
@@ -139,10 +139,36 @@ void draw()
       count = 0;
     }
   }
-  if(waveCount >= waves.size()-1 && creepCount <= 0 && life > 0)
+  if (waveCount > waves.size()-1 && creepCount <= 0 && life > 0)
   {
     textSize(70);
-    text("You Win, Congrats",width/2,height/2);
+    text("You Win, Congrats", width/2, height/2);
+  }
+  if (life <= 0)
+  {
+    play = false;
+    textSize(70);
+    text("You Lose, Press 'R' to restart", width/2, height/2);
+  }
+  if (!play)
+  {
+    if (keys['R'])
+    {
+      waveCount = 0;
+      waveTimer = 0;
+      life = 50;
+      for (int i = gameObjects.size() - 1; i >= 0; i --)
+      {
+        GameObject go = gameObjects.get(i);
+        if (go instanceof Tower)
+        {
+          gameObjects.remove(go);
+        }
+      }
+      creator = new Tower(width - width/20, height/10, 10, 0);
+      gameObjects.add(creator);
+      play = true;
+    }
   }
 
   waveTimer--;
