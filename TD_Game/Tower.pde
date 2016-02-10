@@ -24,15 +24,20 @@ class Tower extends GameObject
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(theta);
-    noFill();
+    fill(c);
     stroke(c);
-    line(- radius, radius, 0, - radius);
-    line(0, - radius, radius, radius);
-    line(radius, radius, 0, 0);
-    line(- radius, radius, 0, 0);
-    if(mouseX > pos.x-radius && mouseX < pos.x+radius && mouseY> pos.y-radius && mouseY < pos.y+radius)
+    //line(- radius, radius, 0, - radius);
+    //line(0, - radius, radius, radius);
+    //line(radius, radius, 0, 0);
+    //line(- radius, radius, 0, 0);
+    arc(0, 0, radius*2, radius*2, - QUARTER_PI, PI+QUARTER_PI);
+    //ellipse(0, -radius, radius, radius/6);
+    noFill();
+    rect(-radius/6, - radius*1.2, radius/3, radius*2);
+
+    if (mouseX > pos.x-radius && mouseX < pos.x+radius && mouseY> pos.y-radius && mouseY < pos.y+radius)
     {
-    ellipse(0, 0, range, range);
+      ellipse(0, 0, range, range);
     }
     popMatrix();
   }
@@ -73,7 +78,7 @@ class Tower extends GameObject
 
       if (ellapsed > 30)
       {
-        Projectile pro = new Projectile(pos.x, pos.y, 1, 2, 5, range,c);
+        Projectile pro = new Projectile(pos.x, pos.y, 1, 2, 5, range, c);
 
         pro.pos.add(PVector.mult(forward, 15.0f));
         pro.forward = forward;

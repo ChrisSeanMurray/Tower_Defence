@@ -114,10 +114,7 @@ void draw()
     {
       noFill();
       stroke(#A403FC);
-      line(mouseX- 10, mouseY +10, mouseX, mouseY - 10);
-      line(mouseX, mouseY- 10, mouseX + 10, mouseY + 10);
-      line(mouseX +10, mouseY +10, mouseX, mouseY);
-      line(mouseX- 10, mouseY +10, mouseX, mouseY);
+      ellipse(mouseX,mouseY,20,20);
       ellipse(mouseX,mouseY,150,150);
     }
     if (!pause && keys['P'])
