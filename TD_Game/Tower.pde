@@ -65,6 +65,8 @@ class Tower extends GameObject
 
   void update()
   {
+    int proLife = 1;
+    int proDamage = 1;
     if (creep == null)
     {
       creep = searchForCreep();
@@ -78,7 +80,7 @@ class Tower extends GameObject
 
       if (ellapsed > 30)
       {
-        Projectile pro = new Projectile(pos.x, pos.y, 1, 2, 5, range, c);
+        Projectile pro = new Projectile(pos.x, pos.y, proLife, proDamage, range, c);
 
         pro.pos.add(PVector.mult(forward, 15.0f));
         pro.forward = forward;

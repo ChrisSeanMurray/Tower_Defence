@@ -76,7 +76,7 @@ void draw()
     text("Score : "+score, width/2, 20);
     text("Money : €"+money, width/2, 30);
     textAlign(CENTER);
-    text("Costs €150 ", creator.pos.x, creator.pos.y-creator.radius);
+    text("Costs €150 ", creator.pos.x, creator.pos.y-creator.radius*2);
 
     if (waveTimer > 0)
     {
@@ -187,7 +187,7 @@ void trackCol()
         {
           if (go.pos.dist(other.pos) < go.radius + other.radius)
           {
-            ((Creep)go).life--;
+            ((Creep)go).life-=  ((Projectile)other).damage;
             ((Projectile)other).life--;
             score += 10;
             money += 3;
@@ -222,7 +222,7 @@ void keyReleased()
 //This method is to create a visual representation of the path the creeps follow
 void loadPath()
 {
-  color c3 = color(255);
+  color c3 = #A7A6A6;
   float theta1, theta2;
   float x1, x2, x3, x4;
   float y1, y2, y3, y4;

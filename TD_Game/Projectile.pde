@@ -5,16 +5,17 @@ class Projectile extends GameObject
   float range;
   PVector start;
 
-  Projectile(float x, float y, int life, int damage, int radius, float range, color c)
+  Projectile(float x, float y, int life, int damage, float range, color c)
   {
     pos.x = x;
     pos.y = y;
     speed = 20.0f;
-    this.radius = radius;
+    this.radius = 5;
     this.life = life;
     this.range = range;
     start = new PVector(x, y);
     this.c = c;
+    this.damage = damage;
   }
 
   void render()
