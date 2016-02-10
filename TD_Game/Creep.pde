@@ -18,11 +18,11 @@ class Creep extends GameObject
     this.radius = radius;
     this.life = life;
     progress = 0;
-   
   }
 
   void render()
   {
+    float x1, x2, y1, y2;
     pushMatrix();
     translate(pos.x, pos.y);
 
@@ -31,31 +31,61 @@ class Creep extends GameObject
     rotate(theta);
     stroke(c);
     fill(c);
-    ellipse(0, 0, radius, radius);
+    
+    //calculting coordinates for drawing creeps, and drawing creeps
+    ellipse(0, 0, radius/5, radius);
+    x1 = radius * cos(QUARTER_PI*3);
+    y1 = radius * sin(QUARTER_PI*3);
+    x2 = radius * cos((HALF_PI*3)*0.95);
+    y2 = radius * sin((HALF_PI*3)*0.95);
+    line(x1, y1, x2, y2);
+    x1 = radius * cos(QUARTER_PI);
+    y1 = radius * sin(QUARTER_PI);
+    x2 = radius * cos((HALF_PI*3)*1.05);
+    y2 = radius * sin((HALF_PI*3)*1.05);
+    line(x1, y1, x2, y2);
+    x1 = radius * cos(QUARTER_PI*3);
+    y1 = radius * sin(QUARTER_PI*3);
+    x2 = radius * cos(HALF_PI *1.1);
+    y2 = radius * sin(HALF_PI*1.1);
+    line(x1, y1, x2, y2);
+    x1 = radius * cos(QUARTER_PI);
+    y1 = radius * sin(QUARTER_PI);
+    x2 = radius * cos(HALF_PI*0.9);
+    y2 = radius * sin(HALF_PI*0.9);
+    line(x1, y1, x2, y2);
+    x1 = radius * cos((HALF_PI*3)*0.95);
+    y1 = radius * sin((HALF_PI*3)*0.95);
+    x2 = radius * cos(HALF_PI *1.1);
+    y2 = radius * sin(HALF_PI*1.1);
+    line(x1, y1, x2, y2);
+    x1 = radius * cos(HALF_PI*0.9);
+    y1 = radius * sin(HALF_PI*0.9);
+    x2 = radius * cos((HALF_PI*3)*1.05);
+    y2 = radius * sin((HALF_PI*3)*1.05);
+    line(x1, y1, x2, y2);
+
     popMatrix();
   }
 
   void update()
   {
     //adjusts the color of the crep depending on how much health it has
-    if(life ==1)
+    if (life ==1)
     {
-    c = #FC0303;
-    }
-    else if(life ==2)
+      c = #FC0303;
+    } else if (life ==2)
     {
       c = #08BFBD;
-    }
-    else if(life == 3)
+    } else if (life == 3)
     {
       c = #F5850C;
-    }
-    else
+    } else
     {
       c = #86EA05;
     }
-    
-    
+
+
     forward.x = sin(theta);
     forward.y = -cos(theta); 
     pos.add(PVector.mult(forward, speed));
